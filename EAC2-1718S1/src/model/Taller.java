@@ -8,12 +8,14 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
 
 /**
  * Taller de l'empresa
  * @author professor
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
+@Entity
 public class Taller extends Establiment implements Serializable{
     
     private int nMaquines;

@@ -6,14 +6,18 @@
 package model;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Establiment de l'empresa
  * @author professor
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
+@Entity
 public class Establiment implements Serializable {
-   private int codi;
+   @Id
+    private int codi;
    private String nom;
    private String ciutat;
 
