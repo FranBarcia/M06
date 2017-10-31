@@ -6,8 +6,10 @@
 package model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Empleat de l'empresa
@@ -15,11 +17,16 @@ import javax.persistence.Id;
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
+@Table(name="employee")
 public class Empleat implements Serializable {
    @Id
+   @Column(name="employee_id", nullable=false)
    private int codi;
+   @Column (name="employee_name", nullable=false)
    private String nom;
+   @Column(name="employee_city", nullable=false)
    private String ciutat;
+   @Column(name="employee_establishment", nullable=false)
    private Establiment establiment;
    
    /**
