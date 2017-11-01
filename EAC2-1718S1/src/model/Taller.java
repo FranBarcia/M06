@@ -8,7 +8,13 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * Taller de l'empresa
@@ -16,9 +22,15 @@ import javax.persistence.Entity;
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
+@DiscriminatorValue(value="taller")
+@NamedQueries({
+    @NamedQuery(name="Taller.obtenirTallers", query="SELECT t FROM Establiment t WHERE TYPE(t) LIKE 'taller'")
+})
 public class Taller extends Establiment implements Serializable{
-    
+    @Column (name="num_maquines", nullable=false)
     private int nMaquines;
+    @OneToMany
+    @JoinColumn(name="punt_venda")
     private final List<PuntVenda> puntsVendaAssociats=new ArrayList<>();
 
 

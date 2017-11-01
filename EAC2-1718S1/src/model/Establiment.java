@@ -6,8 +6,16 @@
 package model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * Establiment de l'empresa
@@ -15,10 +23,23 @@ import javax.persistence.Id;
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
+@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="tipus", discriminatorType= DiscriminatorType.STRING)
+@NamedQueries({
+    @NamedQuery(name="Establiment.eliminar", query="DELETE FROM Establiment e WHERE e.codi = :codiEstabliment"),
+    @NamedQuery(name="Establiment.obtenirEstablment", query="SELECT e FROM Establiment e WHERE e.codi = :codi"),
+    @NamedQuery(name="Establiment.obtenirEstablments", query="SELECT e FROM Establiment e"),
+    @NamedQuery(name="Establiment.obtenirEmpleatsPerCiutat", query="SELECT e FROM Establiment e WHERE e.ciutat LIKE :ciutat"),
+    @NamedQuery(name="Establiment.obtenirEmpleatsPerNom", query="SELECT e FROM Establiment e WHERE e.nom LIKE :nom")
+
+})
 public class Establiment implements Serializable {
    @Id
-    private int codi;
+   @Column (name="codi", nullable=false)
+   private int codi;
+   @Column (name="nom", nullable=false)
    private String nom;
+   @Column (name="ciutat", nullable=false)
    private String ciutat;
 
    /**

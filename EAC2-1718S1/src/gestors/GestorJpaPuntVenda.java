@@ -7,6 +7,7 @@ package gestors;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import model.Empleat;
 import model.PuntVenda;
 
@@ -31,8 +32,14 @@ public class GestorJpaPuntVenda {
      */
     
     //TODO implementar el metode
-       public List<PuntVenda> obtenirPuntsVenda() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<PuntVenda> obtenirPuntsVenda() {
+        Query q = em.createNamedQuery("PuntVenda.obtenirPuntsVenda", PuntVenda.class);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        
+        return q.getResultList();
     }
 
     /**
@@ -41,9 +48,11 @@ public class GestorJpaPuntVenda {
      */
     //TODO implementar el metode
     public void esborraPuntsVenda(String ciutat) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNamedQuery("PuntVenda.esborraPuntsVenda", PuntVenda.class);
+        q.setParameter("ciutat", ciutat);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
     }
-    
-
-
 }

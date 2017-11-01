@@ -7,6 +7,7 @@ package gestors;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import model.Empleat;
 
 /**
@@ -29,7 +30,17 @@ public class GestorJpaEmpleat {
      */
     //TODO implementar el metode
     public void inserir(Empleat empleat) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNativeQuery("INSERT INTO Empleat e VALUES (:codi, :nom, :ciutat, :establiment)", Empleat.class);
+        q.setParameter("codi", empleat.getCodi());
+        q.setParameter("nom", empleat.getNom());
+        q.setParameter("ciutat", empleat.getCiutat());
+        q.setParameter("establiment", empleat.getEstabliment());
+        q.executeUpdate();
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        em.close();
     }
 
     /**
@@ -43,7 +54,17 @@ public class GestorJpaEmpleat {
     //TODO implementar el metode
     
     public void modificar(Empleat empleat) throws GestorJpaException{
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNativeQuery("UPDATE Empleat e SET (e.nom = :nom, e.ciutat = :ciutat, e.establiment = :establiment) WHERE e.codi = :codi", Empleat.class);
+        q.setParameter("codi", empleat.getCodi());
+        q.setParameter("nom", empleat.getNom());
+        q.setParameter("ciutat", empleat.getCiutat());
+        q.setParameter("establiment", empleat.getEstabliment());
+        q.executeUpdate();
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        em.close();
     }
     /**
      * Esborra l'empleat que te determinat codi
@@ -52,7 +73,13 @@ public class GestorJpaEmpleat {
      */
     //TODO implementar el metode
     public void eliminar(int codiEmpleat) throws GestorJpaException{
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNamedQuery("Empleat.eliminar", Empleat.class);
+        q.setParameter("codiEmpleat", codiEmpleat);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        em.close();
     }
 
     /**
@@ -61,8 +88,14 @@ public class GestorJpaEmpleat {
      */
     
     //TODO implementar el metode
-       public List<Empleat> obtenirEmpleats() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Empleat> obtenirEmpleats() {
+        Query q = em.createNamedQuery("Empleat.obtenirEmpleats", Empleat.class);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        
+        return q.getResultList();
     }
 
     /**
@@ -72,7 +105,14 @@ public class GestorJpaEmpleat {
      */
     //TODO implementar el metode
     public Empleat obtenirEmpleat(int codiEmpleat) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNamedQuery("Empleat.obtenirEmpleat", Empleat.class);
+        q.setParameter("codi", codiEmpleat);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        
+        return (Empleat)q.getSingleResult();
     }
 
     /**
@@ -82,7 +122,14 @@ public class GestorJpaEmpleat {
      */
     //TODO implementar el metode
     public List<Empleat> obtenirEmpleatsPerNom(String nom) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNamedQuery("Empleat.obtenirEmpleatsPerNom", Empleat.class);
+        q.setParameter("nom", nom);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        
+        return q.getResultList();
     }
     
     /**
@@ -92,7 +139,14 @@ public class GestorJpaEmpleat {
      */
     //TODO implementar el metode
     public List<Empleat> obtenirEmpleatsPerCiutat(String ciutat) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNamedQuery("Empleat.obtenirEmpleatsPerCiutat", Empleat.class);
+        q.setParameter("ciutat", ciutat);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        
+        return q.getResultList();
     }
     /**
      * Obte una llista amb tots els empleats del context de persistencia que treballen en un establiment amb un codi determinat
@@ -102,14 +156,28 @@ public class GestorJpaEmpleat {
     
     //TODO implementar el metode
     public List<Empleat> obtenirEmpleatsDeEstabliment(int codiEstabliment) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNamedQuery("Empleat.obtenirEmpleatsDeEstabliment", Empleat.class);
+        q.setParameter(":codiEstabliment", codiEstabliment);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        
+        return q.getResultList();
     }
     /**
-     * Obte una llista amb tots els empleats del context de persistencia que treballen a la mateixa ciutat on viuen, es a dir, aquells als quals el nom de la seva ciutat i la ciutat del seu establiment coincideixen
+     * Obte una llista amb tots els empleats del context de persistencia que treballen a la mateixa ciutat on viuen, 
+     * es a dir, aquells als quals el nom de la seva ciutat i la ciutat del seu establiment coincideixen
      * @return llista amb els empleats seleccionats
      */  
     //TODO implementar el metode
     public List<Empleat> obtenirEmpleatsQueTreballenOnViuen() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNamedQuery("Empleat.obtenirEmpleatsQueTreballenOnViuen", Empleat.class);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        
+        return q.getResultList();
     }
 }

@@ -17,6 +17,4 @@ public class GestorJpaException extends Exception{
     public GestorJpaException(String message) {
         super(message);
     }
-    
-    
 }

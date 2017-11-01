@@ -7,6 +7,7 @@ package gestors;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import model.Empleat;
 import model.Taller;
 
@@ -31,8 +32,14 @@ public class GestorJpaTaller {
      */
     
     //TODO implementar el metode
-       public List<Taller> obtenirTallers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Taller> obtenirTallers() {
+        Query q = em.createNamedQuery("Taller.obtenirTallers", Taller.class);
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        
+        return q.getResultList();
     }
 
     /**
@@ -42,7 +49,16 @@ public class GestorJpaTaller {
      */
     //TODO implementar el metode
     public void incrementaMaquines(String ciutat, int increment) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNativeQuery("UPDATE Establiment t SET (t.num_maquines  = :num_maquines) "
+                                    + "WHERE TYPE(t) LIKE 'taller' AND t.ciutat LIKE :ciutat", Empleat.class);
+        q.setParameter("num_maquines", increment);
+        q.setParameter("ciutat", ciutat);
+        q.executeUpdate();
+        
+        em.getTransaction().begin();
+        em.flush();
+        em.getTransaction().commit();
+        em.close();
     }
 
 

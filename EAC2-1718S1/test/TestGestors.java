@@ -466,16 +466,7 @@ public class TestGestors {
         
         llistaTotsEstabliments.addAll(llistaTotsPuntsVenda);
         llistaTotsEstabliments.addAll(llistaTotsTallers);
-        
-    
-
-    }
-    
-    
-    
-    
-    
-    
+    }    
     
     private boolean comparaLlistesEmpleats(List <Empleat> a, List<Empleat> b){
         if(a.size()!=b.size()){

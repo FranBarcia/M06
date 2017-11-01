@@ -9,7 +9,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * Empleat de l'empresa
@@ -17,16 +20,27 @@ import javax.persistence.Table;
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
-@Table(name="employee")
+@NamedQueries({
+    @NamedQuery(name="Empleat.eliminar", query="DELETE FROM Empleat e WHERE e.codi = :codiEmpleat"),
+    @NamedQuery(name="Empleat.obtenirEmpleat", query="SELECT e FROM Empleat e WHERE e.codi = :codi"),
+    @NamedQuery(name="Empleat.obtenirEmpleats", query="SELECT e FROM Empleat e"),
+    @NamedQuery(name="Empleat.obtenirEmpleatsDeEstablment", query="SELECT e FROM Empleat e WHERE e.establiment.codi LIKE "
+                                                               + "(SELECT es FROM Establiment es WHERE es.codi = :codiEstabliment)"),
+    @NamedQuery(name="Empleat.obtenirEmpleatsPerCiutat", query="SELECT e FROM Empleat e WHERE e.ciutat LIKE :ciutat"),
+    @NamedQuery(name="Empleat.obtenirEmpleatsPerNom", query="SELECT e FROM Empleat e WHERE e.nom LIKE :nom"),
+    @NamedQuery(name="Empleat.obtenirEmpleatsQueTreballenOnViuen", query="SELECT e FROM Empleat e WHERE e.ciutat LIKE "
+                                                                      + "(SELECT es FROM Establiment es GROUP BY es.ciutat)")
+})
 public class Empleat implements Serializable {
    @Id
-   @Column(name="employee_id", nullable=false)
+   @Column (name="codi", nullable=false)
    private int codi;
-   @Column (name="employee_name", nullable=false)
+   @Column (name="nom", nullable=false)
    private String nom;
-   @Column(name="employee_city", nullable=false)
+   @Column(name="ciutat", nullable=false)
    private String ciutat;
-   @Column(name="employee_establishment", nullable=false)
+   @ManyToOne
+   @JoinColumn(name="establiment")
    private Establiment establiment;
    
    /**

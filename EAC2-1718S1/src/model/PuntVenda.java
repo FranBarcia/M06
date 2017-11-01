@@ -6,7 +6,13 @@
 package model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * Punt de venda de l'empresa
@@ -14,9 +20,16 @@ import javax.persistence.Entity;
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
+@DiscriminatorValue(value="punt_venda")
+@NamedQueries({
+    @NamedQuery(name="PuntVenda.esborraPuntsVenda", query="DELETE FROM Establiment pv WHERE pv.ciutat = :ciutat"),
+    @NamedQuery(name="PuntVenda.obtenirPuntsVenda", query="SELECT pv FROM Establiment pv WHERE TYPE(pv) LIKE \"punt_venda\"")
+})
 public class PuntVenda extends Establiment implements Serializable{
-    
+    @Column (name="facturacio_objectiu", nullable=false)
     private float facturacioObjectiu;
+    @ManyToOne
+    @JoinColumn(name="taller_assignat")
     private Taller tallerAssignat;
     
     
