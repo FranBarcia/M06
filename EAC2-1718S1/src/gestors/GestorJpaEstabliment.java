@@ -98,7 +98,6 @@ public class GestorJpaEstabliment {
      */
     //TODO implementar el metode
     public List<Establiment> obtenirEstablimentsPerNom(String nom, Class classe) {
-        //Query q = em.createNamedQuery("Establiment.obtenirEstablimentsPerNom", Establiment.class);
         Query q = em.createQuery("SELECT e FROM "+classe.getName()+" e WHERE e.nom = :nom", classe.getClass());
         q.setParameter("nom", nom);
         
