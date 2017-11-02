@@ -30,9 +30,7 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name="Establiment.eliminar", query="DELETE FROM Establiment e WHERE e.codi = :codiEstabliment"),
     @NamedQuery(name="Establiment.obtenirEstabliment", query="SELECT e FROM Establiment e WHERE e.codi = :codiEstabliment"),
     @NamedQuery(name="Establiment.obtenirEstabliments", query="SELECT e FROM Establiment e"),
-    @NamedQuery(name="Establiment.obtenirEmpleatsPerCiutat", query="SELECT e FROM Establiment e WHERE e.ciutat = :ciutat"),
-    @NamedQuery(name="Establiment.obtenirEstablimentsPerNom", query="SELECT e FROM Establiment e "
-                                                                + "WHERE TYPE (e) = :class AND e.nom = :nom")
+    @NamedQuery(name="Establiment.obtenirEmpleatsPerCiutat", query="SELECT e FROM Establiment e WHERE e.ciutat = :ciutat")
 })
 @NamedNativeQuery(name="Establiment.inserir", query="INSERT INTO Establiment e (codi, nom, ciutat)"
                                                   + " VALUES (:codi, :nom, :ciutat)")
