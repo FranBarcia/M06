@@ -1,0 +1,15 @@
+CREATE TYPE DadesPersonals as (nom character varying(30), ciutat character varying(20));
+
+
+CREATE TABLE Programador
+(
+  codi integer NOT NULL,
+  personal DadesPersonals,
+  llenguatges character varying(15)[],
+  CONSTRAINT "clauPrimariaProgramador" PRIMARY KEY (codi)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE Programador
+  OWNER TO "ioc";
