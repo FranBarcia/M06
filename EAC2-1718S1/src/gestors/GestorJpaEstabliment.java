@@ -34,13 +34,6 @@ public class GestorJpaEstabliment {
         em.getTransaction().begin();
         em.persist(establiment);
         em.getTransaction().commit();
-        /*
-        Query q = em.createNativeQuery("Establiment.inserir", Establiment.class);
-        q.setParameter("codi", establiment.getCodi());
-        q.setParameter("nom", establiment.getNom());
-        q.setParameter("ciutat", establiment.getCiutat());
-        q.executeUpdate();
-        */
     }
 
     /**

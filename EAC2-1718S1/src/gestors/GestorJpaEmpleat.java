@@ -85,9 +85,6 @@ public class GestorJpaEmpleat {
      */
     //TODO implementar el metode
     public Empleat obtenirEmpleat(int codiEmpleat) {
-        //Query q = em.createNamedQuery("Empleat.obtenirEmpleat", Empleat.class);
-        //q.setParameter("codiEmpleat", codiEmpleat);
-        
         return em.find(Empleat.class, codiEmpleat);
     }
 
