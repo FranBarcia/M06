@@ -20,7 +20,7 @@ import javax.persistence.NamedQuery;
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
-@DiscriminatorValue(value="punt_venda")
+@DiscriminatorValue(value="PV")
 @NamedQueries({
     @NamedQuery(name="PuntVenda.esborraPuntsVenda", query="DELETE FROM Establiment pv WHERE pv.ciutat = :ciutat"),
     @NamedQuery(name="PuntVenda.obtenirPuntsVenda", query="SELECT pv FROM Establiment pv "

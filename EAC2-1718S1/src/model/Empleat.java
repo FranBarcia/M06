@@ -35,9 +35,9 @@ public class Empleat implements Serializable {
    @Id
    @Column (name="codi", nullable=false)
    private int codi;
-   @Column (name="nom", nullable=false)
+   @Column (name="nom", length=30, nullable=false)
    private String nom;
-   @Column(name="ciutat", nullable=false)
+   @Column(name="ciutat", length=20, nullable=false)
    private String ciutat;
    @ManyToOne
    @JoinColumn(name="establiment")

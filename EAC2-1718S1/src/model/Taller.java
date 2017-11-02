@@ -22,14 +22,14 @@ import javax.persistence.NamedQuery;
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
-@DiscriminatorValue(value="taller")
+@DiscriminatorValue(value="T")
 @NamedQueries({
     @NamedQuery(name="Taller.obtenirTaller", query="SELECT t FROM Establiment t "
                                                 + "WHERE TYPE(t) = Taller AND t.ciutat = :ciutat"),
     @NamedQuery(name="Taller.obtenirTallers", query="SELECT t FROM Establiment t WHERE TYPE(t) = Taller")
 })
 public class Taller extends Establiment implements Serializable{
-    @Column (name="num_maquines", nullable=false)
+    @Column (name="MAQUINES", nullable=false)
     private int nMaquines;
     @OneToMany
     @JoinColumn(name="punt_venda")

@@ -25,7 +25,8 @@ import javax.persistence.NamedQuery;
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="tipus", discriminatorType= DiscriminatorType.STRING)
+@DiscriminatorColumn(name="tipus", discriminatorType= DiscriminatorType.STRING, length=2)
+@DiscriminatorValue(value="E")
 @NamedQueries({
     @NamedQuery(name="Establiment.eliminar", query="DELETE FROM Establiment e WHERE e.codi = :codiEstabliment"),
     @NamedQuery(name="Establiment.obtenirEstabliment", query="SELECT e FROM Establiment e WHERE e.codi = :codiEstabliment"),
