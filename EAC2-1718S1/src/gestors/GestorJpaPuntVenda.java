@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import model.Empleat;
 import model.PuntVenda;
+import model.Taller;
 
 /**
  * Gestor de punt de venda que proporciona operacions relcionades amb la persistencia als punts de venda per un determinat context de persistencia (EntityManager)
@@ -35,10 +36,6 @@ public class GestorJpaPuntVenda {
     public List<PuntVenda> obtenirPuntsVenda() {
         Query q = em.createNamedQuery("PuntVenda.obtenirPuntsVenda", PuntVenda.class);
         
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
-        
         return q.getResultList();
     }
 
@@ -48,11 +45,16 @@ public class GestorJpaPuntVenda {
      */
     //TODO implementar el metode
     public void esborraPuntsVenda(String ciutat) {
-        Query q = em.createNamedQuery("PuntVenda.esborraPuntsVenda", PuntVenda.class);
+        PuntVenda pvAux = null;
+        em.getTransaction().begin();
+        
+        Query q = em.createNamedQuery("PuntVenda.obtenirPuntsVendaPerCiutat", PuntVenda.class);
         q.setParameter("ciutat", ciutat);
         
-        em.getTransaction().begin();
-        em.flush();
+        for (Object resultList : q.getResultList()) {
+            pvAux = (PuntVenda)resultList;
+            em.remove(pvAux);
+        }
         em.getTransaction().commit();
     }
 }

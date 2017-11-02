@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -27,12 +28,14 @@ import javax.persistence.NamedQuery;
 @DiscriminatorColumn(name="tipus", discriminatorType= DiscriminatorType.STRING)
 @NamedQueries({
     @NamedQuery(name="Establiment.eliminar", query="DELETE FROM Establiment e WHERE e.codi = :codiEstabliment"),
-    @NamedQuery(name="Establiment.obtenirEstablment", query="SELECT e FROM Establiment e WHERE e.codi = :codi"),
-    @NamedQuery(name="Establiment.obtenirEstablments", query="SELECT e FROM Establiment e"),
-    @NamedQuery(name="Establiment.obtenirEmpleatsPerCiutat", query="SELECT e FROM Establiment e WHERE e.ciutat LIKE :ciutat"),
-    @NamedQuery(name="Establiment.obtenirEmpleatsPerNom", query="SELECT e FROM Establiment e WHERE e.nom LIKE :nom")
-
+    @NamedQuery(name="Establiment.obtenirEstabliment", query="SELECT e FROM Establiment e WHERE e.codi = :codiEstabliment"),
+    @NamedQuery(name="Establiment.obtenirEstabliments", query="SELECT e FROM Establiment e"),
+    @NamedQuery(name="Establiment.obtenirEmpleatsPerCiutat", query="SELECT e FROM Establiment e WHERE e.ciutat = :ciutat"),
+    @NamedQuery(name="Establiment.obtenirEstablimentsPerNom", query="SELECT e FROM Establiment e "
+                                                                + "WHERE TYPE (e) = :class AND e.nom = :nom")
 })
+@NamedNativeQuery(name="Establiment.inserir", query="INSERT INTO Establiment e (codi, nom, ciutat)"
+                                                  + " VALUES (:codi, :nom, :ciutat)")
 public class Establiment implements Serializable {
    @Id
    @Column (name="codi", nullable=false)

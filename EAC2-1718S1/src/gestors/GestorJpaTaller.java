@@ -35,10 +35,6 @@ public class GestorJpaTaller {
     public List<Taller> obtenirTallers() {
         Query q = em.createNamedQuery("Taller.obtenirTallers", Taller.class);
         
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
-        
         return q.getResultList();
     }
 
@@ -49,16 +45,19 @@ public class GestorJpaTaller {
      */
     //TODO implementar el metode
     public void incrementaMaquines(String ciutat, int increment) {
-        Query q = em.createNativeQuery("UPDATE Establiment t SET (t.num_maquines  = :num_maquines) "
-                                    + "WHERE TYPE(t) LIKE 'taller' AND t.ciutat LIKE :ciutat", Empleat.class);
-        q.setParameter("num_maquines", increment);
-        q.setParameter("ciutat", ciutat);
-        q.executeUpdate();
-        
+        Taller tAux;
         em.getTransaction().begin();
-        em.flush();
+        
+        Query q = em.createNamedQuery("Taller.obtenirTaller", Taller.class);
+        q.setParameter("ciutat", ciutat);
+        
+        for (Object resultList : q.getResultList()) {
+            tAux = (Taller)resultList;
+            tAux.setNMaquines(tAux.getNMaquines()+increment);
+            em.persist(tAux);
+        }
+        
         em.getTransaction().commit();
-        em.close();
     }
 
 

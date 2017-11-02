@@ -31,16 +31,16 @@ public class GestorJpaEstabliment {
      */
     //TODO implementar el metode
     public void inserir(Establiment establiment) {
-        Query q = em.createNativeQuery("INSERT INTO Establiment e VALUES (:codi, :nom, :ciutat)", Establiment.class);
+        em.getTransaction().begin();
+        em.persist(establiment);
+        em.getTransaction().commit();
+        /*
+        Query q = em.createNativeQuery("Establiment.inserir", Establiment.class);
         q.setParameter("codi", establiment.getCodi());
         q.setParameter("nom", establiment.getNom());
         q.setParameter("ciutat", establiment.getCiutat());
         q.executeUpdate();
-        
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
-        em.close();
+        */
     }
 
     /**
@@ -54,16 +54,9 @@ public class GestorJpaEstabliment {
     //TODO implementar el metode
     
     public void modificar(Establiment establiment) throws GestorJpaException{
-        Query q = em.createNativeQuery("UPDATE Establiment e SET (e.nom = :nom, e.ciutat = :ciutat) WHERE e.codi = :codi", Establiment.class);
-        q.setParameter("codi", establiment.getCodi());
-        q.setParameter("nom", establiment.getNom());
-        q.setParameter("ciutat", establiment.getCiutat());
-        q.executeUpdate();
-        
         em.getTransaction().begin();
-        em.flush();
+        em.persist(establiment);
         em.getTransaction().commit();
-        em.close();
     }
     /**
      * Esborra l'establiment que te determinat codi
@@ -72,13 +65,13 @@ public class GestorJpaEstabliment {
      */
     //TODO implementar el metode
     public void eliminar(int codiEstabliment) throws GestorJpaException{
-        Query q = em.createNamedQuery("Establiment.eliminar", Establiment.class);
-        q.setParameter("codiEstabliment", codiEstabliment);
-        
         em.getTransaction().begin();
-        em.flush();
+        
+        Query q = em.createNamedQuery("Establiment.obtenirEstabliment", Establiment.class);
+        q.setParameter("codiEstabliment", codiEstabliment);
+        em.remove(q.getSingleResult());
+        
         em.getTransaction().commit();
-        em.close();
     }
 
     /**
@@ -88,11 +81,7 @@ public class GestorJpaEstabliment {
     
     //TODO implementar el metode
     public List<Establiment> obtenirEstabliments() {
-        Query q = em.createNamedQuery("Establiment.obtenirEstablments", Establiment.class);
-        
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
+        Query q = em.createNamedQuery("Establiment.obtenirEstabliments", Establiment.class);
         
         return q.getResultList();
     }
@@ -104,14 +93,7 @@ public class GestorJpaEstabliment {
      */
     //TODO implementar el metode
     public Establiment obtenirEstabliment(int codiEstabliment) {
-        Query q = em.createNamedQuery("Establiment.obtenirEstablment", Establiment.class);
-        q.setParameter("codi", codiEstabliment);
-        
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
-        
-        return (Establiment)q.getSingleResult();
+        return em.find(Establiment.class, codiEstabliment);
     }
 
     /**
@@ -123,12 +105,9 @@ public class GestorJpaEstabliment {
      */
     //TODO implementar el metode
     public List<Establiment> obtenirEstablimentsPerNom(String nom, Class classe) {
-        Query q = em.createNamedQuery("Establiment.obtenirEmpleatsPerCiutat", Establiment.class);
-        q.setParameter("ciutat", nom);
-        
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
+        Query q = em.createNamedQuery("Establiment.obtenirEstablimentsPerNom", Establiment.class);
+        q.setParameter("nom", nom);
+        q.setParameter("class", classe);
         
         return q.getResultList();
     }
@@ -142,10 +121,6 @@ public class GestorJpaEstabliment {
     public List<Establiment> obtenirEstablimentsPerCiutat(String ciutat) {
         Query q = em.createNamedQuery("Establiment.obtenirEmpleatsPerCiutat", Establiment.class);
         q.setParameter("ciutat", ciutat);
-        
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
         
         return q.getResultList();
     }

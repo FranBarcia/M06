@@ -24,7 +24,9 @@ import javax.persistence.NamedQuery;
 @Entity
 @DiscriminatorValue(value="taller")
 @NamedQueries({
-    @NamedQuery(name="Taller.obtenirTallers", query="SELECT t FROM Establiment t WHERE TYPE(t) LIKE 'taller'")
+    @NamedQuery(name="Taller.obtenirTaller", query="SELECT t FROM Establiment t "
+                                                + "WHERE TYPE(t) = Taller AND t.ciutat = :ciutat"),
+    @NamedQuery(name="Taller.obtenirTallers", query="SELECT t FROM Establiment t WHERE TYPE(t) = Taller")
 })
 public class Taller extends Establiment implements Serializable{
     @Column (name="num_maquines", nullable=false)

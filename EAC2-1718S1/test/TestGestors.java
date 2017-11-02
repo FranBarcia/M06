@@ -174,7 +174,7 @@ public class TestGestors {
             if(aux.getCiutat().equals(CIUTAT)){                    
                 if((valorsAntics.get(aux.getCodi())+INCREMENT)!=aux.getNMaquines()){
 
-                    fail();
+                        fail();
                 }
             }
         }
@@ -209,7 +209,7 @@ public class TestGestors {
             }
         }
         
-        gestorJpaPuntVenda.esborraPuntsVenda(CIUTAT);
+            gestorJpaPuntVenda.esborraPuntsVenda(CIUTAT);
         tancaIObre();
         totsPuntsVenda=gestorJpaPuntVenda.obtenirPuntsVenda();
         

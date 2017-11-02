@@ -23,7 +23,10 @@ import javax.persistence.NamedQuery;
 @DiscriminatorValue(value="punt_venda")
 @NamedQueries({
     @NamedQuery(name="PuntVenda.esborraPuntsVenda", query="DELETE FROM Establiment pv WHERE pv.ciutat = :ciutat"),
-    @NamedQuery(name="PuntVenda.obtenirPuntsVenda", query="SELECT pv FROM Establiment pv WHERE TYPE(pv) LIKE \"punt_venda\"")
+    @NamedQuery(name="PuntVenda.obtenirPuntsVenda", query="SELECT pv FROM Establiment pv "
+                                                + "WHERE TYPE(pv) = PuntVenda"),
+    @NamedQuery(name="PuntVenda.obtenirPuntsVendaPerCiutat", query="SELECT pv FROM Establiment pv "
+                                                + "WHERE TYPE(pv) = PuntVenda AND pv.ciutat = :ciutat")
 })
 public class PuntVenda extends Establiment implements Serializable{
     @Column (name="facturacio_objectiu", nullable=false)

@@ -22,14 +22,14 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name="Empleat.eliminar", query="DELETE FROM Empleat e WHERE e.codi = :codiEmpleat"),
-    @NamedQuery(name="Empleat.obtenirEmpleat", query="SELECT e FROM Empleat e WHERE e.codi = :codi"),
+    @NamedQuery(name="Empleat.obtenirEmpleat", query="SELECT e FROM Empleat e WHERE e.codi = :codiEmpleat"),
     @NamedQuery(name="Empleat.obtenirEmpleats", query="SELECT e FROM Empleat e"),
-    @NamedQuery(name="Empleat.obtenirEmpleatsDeEstablment", query="SELECT e FROM Empleat e WHERE e.establiment.codi LIKE "
-                                                               + "(SELECT es FROM Establiment es WHERE es.codi = :codiEstabliment)"),
+    @NamedQuery(name="Empleat.obtenirEmpleatsDeEstabliment", query="SELECT e FROM Empleat e "
+                                                                + "WHERE e.establiment.codi = :codiEstabliment"),
     @NamedQuery(name="Empleat.obtenirEmpleatsPerCiutat", query="SELECT e FROM Empleat e WHERE e.ciutat LIKE :ciutat"),
     @NamedQuery(name="Empleat.obtenirEmpleatsPerNom", query="SELECT e FROM Empleat e WHERE e.nom LIKE :nom"),
-    @NamedQuery(name="Empleat.obtenirEmpleatsQueTreballenOnViuen", query="SELECT e FROM Empleat e WHERE e.ciutat LIKE "
-                                                                      + "(SELECT es FROM Establiment es GROUP BY es.ciutat)")
+    @NamedQuery(name="Empleat.obtenirEmpleatsQueTreballenOnViuen", query="SELECT e FROM Empleat e "
+                                                                + "WHERE e.ciutat = e.establiment.ciutat")
 })
 public class Empleat implements Serializable {
    @Id

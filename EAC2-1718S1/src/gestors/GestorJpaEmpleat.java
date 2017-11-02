@@ -30,17 +30,9 @@ public class GestorJpaEmpleat {
      */
     //TODO implementar el metode
     public void inserir(Empleat empleat) {
-        Query q = em.createNativeQuery("INSERT INTO Empleat e VALUES (:codi, :nom, :ciutat, :establiment)", Empleat.class);
-        q.setParameter("codi", empleat.getCodi());
-        q.setParameter("nom", empleat.getNom());
-        q.setParameter("ciutat", empleat.getCiutat());
-        q.setParameter("establiment", empleat.getEstabliment());
-        q.executeUpdate();
-        
         em.getTransaction().begin();
-        em.flush();
+        em.persist(empleat);
         em.getTransaction().commit();
-        em.close();
     }
 
     /**
@@ -54,17 +46,9 @@ public class GestorJpaEmpleat {
     //TODO implementar el metode
     
     public void modificar(Empleat empleat) throws GestorJpaException{
-        Query q = em.createNativeQuery("UPDATE Empleat e SET (e.nom = :nom, e.ciutat = :ciutat, e.establiment = :establiment) WHERE e.codi = :codi", Empleat.class);
-        q.setParameter("codi", empleat.getCodi());
-        q.setParameter("nom", empleat.getNom());
-        q.setParameter("ciutat", empleat.getCiutat());
-        q.setParameter("establiment", empleat.getEstabliment());
-        q.executeUpdate();
-        
         em.getTransaction().begin();
-        em.flush();
+        em.persist(empleat);
         em.getTransaction().commit();
-        em.close();
     }
     /**
      * Esborra l'empleat que te determinat codi
@@ -73,13 +57,13 @@ public class GestorJpaEmpleat {
      */
     //TODO implementar el metode
     public void eliminar(int codiEmpleat) throws GestorJpaException{
-        Query q = em.createNamedQuery("Empleat.eliminar", Empleat.class);
-        q.setParameter("codiEmpleat", codiEmpleat);
-        
         em.getTransaction().begin();
-        em.flush();
+        
+        Query q = em.createNamedQuery("Empleat.obtenirEmpleat", Empleat.class);
+        q.setParameter("codiEmpleat", codiEmpleat);
+        em.remove(q.getSingleResult());
+        
         em.getTransaction().commit();
-        em.close();
     }
 
     /**
@@ -91,10 +75,6 @@ public class GestorJpaEmpleat {
     public List<Empleat> obtenirEmpleats() {
         Query q = em.createNamedQuery("Empleat.obtenirEmpleats", Empleat.class);
         
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
-        
         return q.getResultList();
     }
 
@@ -105,14 +85,10 @@ public class GestorJpaEmpleat {
      */
     //TODO implementar el metode
     public Empleat obtenirEmpleat(int codiEmpleat) {
-        Query q = em.createNamedQuery("Empleat.obtenirEmpleat", Empleat.class);
-        q.setParameter("codi", codiEmpleat);
+        //Query q = em.createNamedQuery("Empleat.obtenirEmpleat", Empleat.class);
+        //q.setParameter("codiEmpleat", codiEmpleat);
         
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
-        
-        return (Empleat)q.getSingleResult();
+        return em.find(Empleat.class, codiEmpleat);
     }
 
     /**
@@ -124,10 +100,6 @@ public class GestorJpaEmpleat {
     public List<Empleat> obtenirEmpleatsPerNom(String nom) {
         Query q = em.createNamedQuery("Empleat.obtenirEmpleatsPerNom", Empleat.class);
         q.setParameter("nom", nom);
-        
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
         
         return q.getResultList();
     }
@@ -142,10 +114,6 @@ public class GestorJpaEmpleat {
         Query q = em.createNamedQuery("Empleat.obtenirEmpleatsPerCiutat", Empleat.class);
         q.setParameter("ciutat", ciutat);
         
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
-        
         return q.getResultList();
     }
     /**
@@ -157,11 +125,7 @@ public class GestorJpaEmpleat {
     //TODO implementar el metode
     public List<Empleat> obtenirEmpleatsDeEstabliment(int codiEstabliment) {
         Query q = em.createNamedQuery("Empleat.obtenirEmpleatsDeEstabliment", Empleat.class);
-        q.setParameter(":codiEstabliment", codiEstabliment);
-        
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
+        q.setParameter("codiEstabliment", codiEstabliment);
         
         return q.getResultList();
     }
@@ -173,10 +137,6 @@ public class GestorJpaEmpleat {
     //TODO implementar el metode
     public List<Empleat> obtenirEmpleatsQueTreballenOnViuen() {
         Query q = em.createNamedQuery("Empleat.obtenirEmpleatsQueTreballenOnViuen", Empleat.class);
-        
-        em.getTransaction().begin();
-        em.flush();
-        em.getTransaction().commit();
         
         return q.getResultList();
     }
