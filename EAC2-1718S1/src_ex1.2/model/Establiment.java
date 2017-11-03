@@ -25,10 +25,9 @@ import javax.persistence.Table;
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
-@Table(name="Estabiment", schema="ioc")
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="tipus", discriminatorType= DiscriminatorType.STRING, length=2)
-@DiscriminatorValue(value="E")
+//@DiscriminatorValue(value="E")
 @NamedQueries({
     @NamedQuery(name="Establiment.eliminar", query="DELETE FROM Establiment e WHERE e.codi = :codiEstabliment"),
     @NamedQuery(name="Establiment.obtenirEstabliment", query="SELECT e FROM Establiment e WHERE e.codi = :codiEstabliment"),
@@ -39,11 +38,8 @@ import javax.persistence.Table;
                                                   + " VALUES (:codi, :nom, :ciutat)")
 public class Establiment implements Serializable {
    @Id
-   @Column (name="codi", nullable=false)
    private int codi;
-   @Column (name="nom", nullable=false)
    private String nom;
-   @Column (name="ciutat", nullable=false)
    private String ciutat;
 
    /**

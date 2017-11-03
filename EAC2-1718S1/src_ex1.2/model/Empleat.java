@@ -21,7 +21,6 @@ import javax.persistence.Table;
  */
 //TODO posar les anotacions necessaries per fer la classe persistent
 @Entity
-@Table(name="Empleat", schema="ioc")
 @NamedQueries({
     @NamedQuery(name="Empleat.eliminar", query="DELETE FROM Empleat e WHERE e.codi = :codiEmpleat"),
     @NamedQuery(name="Empleat.obtenirEmpleat", query="SELECT e FROM Empleat e WHERE e.codi = :codiEmpleat"),
@@ -35,14 +34,12 @@ import javax.persistence.Table;
 })
 public class Empleat implements Serializable {
    @Id
-   @Column (name="codi", nullable=false)
    private int codi;
-   @Column (name="nom", length=30, nullable=false)
+   @Column (length=30)
    private String nom;
-   @Column(name="ciutat", length=20, nullable=false)
+   @Column (length=20)
    private String ciutat;
    @ManyToOne
-   @JoinColumn(name="establiment")
    private Establiment establiment;
    
    /**
