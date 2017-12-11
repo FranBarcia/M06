@@ -29,10 +29,9 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name="Taller.obtenirTallers", query="SELECT t FROM Establiment t WHERE TYPE(t) = Taller")
 })
 public class Taller extends Establiment implements Serializable{
-    @Column (name="MAQUINES", nullable=false)
+    @Column (name="MAQUINES")
     private int nMaquines;
-    @OneToMany
-    @JoinColumn(name="punt_venda")
+    @OneToMany(mappedBy="tallerAssignat")
     private final List<PuntVenda> puntsVendaAssociats=new ArrayList<>();
 
 

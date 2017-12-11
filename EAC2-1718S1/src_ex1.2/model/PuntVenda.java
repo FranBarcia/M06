@@ -31,10 +31,8 @@ import javax.persistence.Table;
                                                 + "WHERE TYPE(pv) = PuntVenda AND pv.ciutat = :ciutat")
 })
 public class PuntVenda extends Establiment implements Serializable{
-    @Column (name="facturacio_objectiu", nullable=false)
     private float facturacioObjectiu;
     @ManyToOne
-    @JoinColumn(name="taller_assignat")
     private Taller tallerAssignat;
     
     
