@@ -51,11 +51,13 @@ public class Tarifa {
 // addPropertyChangeListener i addVetoableChangeListener
 
     void addPropertyChangeListener(ObservadorCanvis observadorCanvis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (observadorCanvis.getCanvis() != 0) {
+            System.out.println("addPropertyChange method");
+        }
     }
 
     void addVetoableChangeListener(ObservadorVetant observadorVetant) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("addVetoableChange method");
     }
     
 }

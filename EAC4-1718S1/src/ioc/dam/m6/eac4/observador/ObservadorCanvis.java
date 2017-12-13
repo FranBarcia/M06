@@ -24,6 +24,9 @@ public class ObservadorCanvis implements PropertyChangeListener{
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         //  TODO cal implementar el metode
+        if (evt.getNewValue() != evt.getOldValue()) {
+            canvis++;
+        }
     }
     
     /**
