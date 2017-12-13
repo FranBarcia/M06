@@ -22,6 +22,8 @@ public class Tarifa {
 
 
     private String nom="";  //nom de la tarifa
+    private VetoableChangeSupport vcs;
+    private PropertyChangeSupport pcs;
 
     /**
      * Permet consultar el nom de la tarifa
@@ -47,5 +49,13 @@ public class Tarifa {
 // dels observadors.
 // Com es veu al codi de la classe Pantalla, s'han d'anomenar
 // addPropertyChangeListener i addVetoableChangeListener
+
+    void addPropertyChangeListener(ObservadorCanvis observadorCanvis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void addVetoableChangeListener(ObservadorVetant observadorVetant) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
