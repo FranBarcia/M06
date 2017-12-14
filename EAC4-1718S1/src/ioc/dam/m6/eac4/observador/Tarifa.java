@@ -22,8 +22,8 @@ public class Tarifa {
 
 
     private String nom="";  //nom de la tarifa
-    private VetoableChangeSupport vcs;
-    private PropertyChangeSupport pcs;
+    private VetoableChangeSupport vcs = new VetoableChangeSupport(this);
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
      * Permet consultar el nom de la tarifa
@@ -50,12 +50,20 @@ public class Tarifa {
 // Com es veu al codi de la classe Pantalla, s'han d'anomenar
 // addPropertyChangeListener i addVetoableChangeListener
 
+    public void addVetoableChangeListener(VetoableChangeListener listener) {
+         this.vcs.addVetoableChangeListener(listener);
+     }
+
+     public void removeVetoableChangeListener(VetoableChangeListener listener) {
+         this.vcs.removeVetoableChangeListener(listener);
+     }
+     
     public void addPropertyChangeListener(PropertyChangeListener listener) {
          this.pcs.addPropertyChangeListener(listener);
-    }
+     }
 
-    void addVetoableChangeListener(ObservadorVetant observadorVetant) {
-        System.out.println("addVetoableChange method");
-    }
-    
+     public void removePropertyChangeListener(PropertyChangeListener listener) {
+         this.pcs.removePropertyChangeListener(listener);
+     }
+
 }

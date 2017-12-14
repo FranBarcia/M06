@@ -35,9 +35,13 @@ public class ObservadorVetant implements VetoableChangeListener{
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         //  TODO cal implementar el metode
-        // superar maxim canvis permés, per fer
-        if ((evt.getNewValue() != evt.getOldValue()) && (canvisPermesos < 3)) {
+        String novaTarifa;
+        
+        if (canvisPermesos == 0) {
             throw new PropertyVetoException("El canvi supera el nombre de canvis permés", evt);
+        } else {
+            novaTarifa = (String)evt.getNewValue();
+            canvisPermesos--;
         }
     }
 }
