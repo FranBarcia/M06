@@ -50,10 +50,8 @@ public class Tarifa {
 // Com es veu al codi de la classe Pantalla, s'han d'anomenar
 // addPropertyChangeListener i addVetoableChangeListener
 
-    void addPropertyChangeListener(ObservadorCanvis observadorCanvis) {
-        if (observadorCanvis.getCanvis() != 0) {
-            System.out.println("addPropertyChange method");
-        }
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+         this.pcs.addPropertyChangeListener(listener);
     }
 
     void addVetoableChangeListener(ObservadorVetant observadorVetant) {
