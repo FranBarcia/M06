@@ -36,6 +36,7 @@ public class EstablimentDao extends AbstractJdbcDaoSimplificat<Establiment> {
         super(connection);
     }
     
+    //TODO completar aquest metode
     @Override
     protected boolean esPersistent(final Establiment entitat) throws UtilitatPersistenciaException {
         boolean empleat= false;
@@ -62,6 +63,7 @@ public class EstablimentDao extends AbstractJdbcDaoSimplificat<Establiment> {
         return empleat;
     }
     
+    //TODO completar aquest metode
     @Override
     protected void modificar(final Establiment entitat) throws UtilitatPersistenciaException {
         JdbcPreparedDao jdbcPreparedDao = new JdbcPreparedDao() {
@@ -83,6 +85,7 @@ public class EstablimentDao extends AbstractJdbcDaoSimplificat<Establiment> {
         UtilitatJdbcPlus.executar(con, jdbcPreparedDao);
     }
     
+    //TODO completar aquest metode
     @Override
     protected void inserir(final Establiment entitat) throws UtilitatPersistenciaException {
         JdbcPreparedDao jdbcPreparedDao = new JdbcPreparedDao() {
@@ -103,48 +106,52 @@ public class EstablimentDao extends AbstractJdbcDaoSimplificat<Establiment> {
         UtilitatJdbcPlus.executar(con, jdbcPreparedDao);
     }
     
+    //TODO completar aquest metode
     @Override
     public Establiment refrescar(final Establiment entitat) throws UtilitatPersistenciaException {
-        Establiment ret= null;
+        Establiment establiment;
         JdbcPreparedQueryDao jdbcDao = new JdbcPreparedQueryDao() {
 
             @Override
             public Object writeObject(ResultSet rs) throws SQLException {
-                
+
                 int field=0;
-                Establiment establiment = new Establiment();
-                establiment.setCodi(entitat.getCodi());
-                establiment.setNom(rs.getString(++field));
-                establiment.setCiutat(rs.getString(++field));
                 
-                establiment.getEmpleats().clear();
+                entitat.setNom(rs.getString(++field));
+                entitat.setCiutat(rs.getString(++field));                
                 
-                try {
-                    EmpleatDao ed = new EmpleatDao(con);
-                    establiment.getEmpleats().addAll(ed.obtenirEmpleatsQueTreballenOnViuen());
-                } catch (UtilitatPersistenciaException ex) {
-                    Logger.getLogger(EstablimentDao.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                do{
+                   int camp=field;
+                   int codi=rs.getInt(++camp);
+                   if(!rs.wasNull()){
+                       Empleat e= new Empleat();
+                       e.setCodi(codi);
+                       e.setNom(rs.getString(++camp));
+                       e.setCiutat(rs.getString(++camp));
+                       e.setEstabliment(entitat);
+                       entitat.getEmpleats().add(e);
+                   }
+                }while(rs.next());
                 
-                return establiment;
+                return entitat;
             }
 
             @Override
             public String getStatement() {
-                return "select nom, ciutat from Establiment where codi=?";
+                return "SELECT es.nom, es.ciutat, e.codi, e.nom, e.ciutat FROM Establiment es JOIN Empleat e ON es.codi = e.establiment WHERE es.codi = ?";
             }
 
             @Override
             public void setParameter(PreparedStatement pstm) throws SQLException {
-                int field=0;
-                pstm.setInt(++field, entitat.getCodi());
+                pstm.setInt(1, entitat.getCodi());
             }
         };
-        ret = (Establiment) UtilitatJdbcPlus.obtenirObjecte(con, jdbcDao);
-        
-        return ret;
+        establiment = (Establiment) UtilitatJdbcPlus.obtenirObjecte(con, jdbcDao);
+
+        return establiment;
     }
 
+    //TODO completar aquest metode
     @Override
     public void eliminar(final Establiment entitat) throws UtilitatPersistenciaException {
         JdbcPreparedDao jdbcDao = new JdbcPreparedDao() {
@@ -163,6 +170,7 @@ public class EstablimentDao extends AbstractJdbcDaoSimplificat<Establiment> {
         UtilitatJdbcPlus.executar(con, jdbcDao);
     }
  
+    //TODO completar aquest metode
     @Override
     public List<Establiment> obtenirTot() throws UtilitatPersistenciaException {   
         JdbcQueryDao jdbcDao = new JdbcQueryDao() {
@@ -209,8 +217,44 @@ public class EstablimentDao extends AbstractJdbcDaoSimplificat<Establiment> {
      * @throws UtilitatJdbcSQLException si es produeix un error 
      */     
 
+    //TODO completar aquest metode
     public List<Establiment> obtenirEstablimentsPerNom(String nom) throws UtilitatJdbcSQLException {
-        return null;   //instruccio que cal canviar; nomes hi es perque es pugui compilar     
+        JdbcPreparedQueryDao jdbcDao = new JdbcPreparedQueryDao() {
+
+            @Override
+            public Object writeObject(ResultSet rs) throws SQLException {
+                int field=0;
+                Establiment establiment = new Establiment();
+                establiment.setCodi(rs.getInt(++field));
+                establiment.setNom(rs.getString(++field));
+                establiment.setCiutat(rs.getString(++field));
+                
+                establiment.getEmpleats().clear();
+                
+                try {
+                    EmpleatDao ed = new EmpleatDao(con);
+                    establiment.getEmpleats().addAll(ed.obtenirEmpleatsQueTreballenOnViuen());
+                    
+                } catch (UtilitatPersistenciaException ex) {
+                    Logger.getLogger(EstablimentDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                return establiment;
+            }
+
+            @Override
+            public String getStatement() {
+                return "select codi, nom, ciutat from Establiment where nom like ?";
+            }
+            
+            @Override
+            public void setParameter(PreparedStatement pstm) throws SQLException {
+                pstm.setString(1, nom);
+            }
+
+        };
+        List<Establiment> ret = UtilitatJdbcPlus.obtenirLlista(con, jdbcDao);        
+        return ret;
     }
 
     /**
@@ -224,8 +268,43 @@ public class EstablimentDao extends AbstractJdbcDaoSimplificat<Establiment> {
      * @throws UtilitatJdbcSQLException si es produeix un error 
      */  
     
-    //TODO completar aquest metode   
+    //TODO completar aquest metode
     public List<Establiment> obtenirEstablimentsPerCiutat(String ciutat) throws UtilitatJdbcSQLException {
-        return null;   //instruccio que cal canviar; nomes hi es perque es pugui compilar     
+        JdbcPreparedQueryDao jdbcDao = new JdbcPreparedQueryDao() {
+
+            @Override
+            public Object writeObject(ResultSet rs) throws SQLException {
+                int field=0;
+                Establiment establiment = new Establiment();
+                establiment.setCodi(rs.getInt(++field));
+                establiment.setNom(rs.getString(++field));
+                establiment.setCiutat(rs.getString(++field));
+                
+                establiment.getEmpleats().clear();
+                
+                try {
+                    EmpleatDao ed = new EmpleatDao(con);
+                    establiment.getEmpleats().addAll(ed.obtenirEmpleatsQueTreballenOnViuen());
+                    
+                } catch (UtilitatPersistenciaException ex) {
+                    Logger.getLogger(EstablimentDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                return establiment;
+            }
+
+            @Override
+            public String getStatement() {
+                return "select codi, nom, ciutat from Establiment where ciutat like ?";
+            }
+            
+            @Override
+            public void setParameter(PreparedStatement pstm) throws SQLException {
+                pstm.setString(1, ciutat);
+            }
+
+        };
+        List<Establiment> ret = UtilitatJdbcPlus.obtenirLlista(con, jdbcDao);        
+        return ret;
     }
 }

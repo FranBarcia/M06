@@ -161,6 +161,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
         return ret;
     }
 
+    //TODO completar aquest metode
     @Override
     public void eliminar(final Empleat entitat) throws UtilitatPersistenciaException {
          JdbcPreparedDao jdbcDao = new JdbcPreparedDao() {
@@ -227,6 +228,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
      * @throws UtilitatPersistenciaException si es produeix un error 
      */  
     
+    //TODO completar aquest metode
     public List<Empleat> obtenirEmpleatsPerNom(String nom) throws UtilitatPersistenciaException{
         JdbcPreparedQueryDao jdbcDao = new JdbcPreparedQueryDao() {
             @Override
@@ -252,7 +254,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
 
             @Override
             public String getStatement() {
-                return "SELECT e FROM Empleat e WHERE e.nom LIKE ?";
+                return "SELECT e.codi, e.nom, e.ciutat, e.establiment, es.nom, es.ciutat FROM Empleat e JOIN Establiment es ON e.establiment = es.codi WHERE e.nom LIKE ?";
             }
 
             @Override
@@ -275,6 +277,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
      * @throws UtilitatPersistenciaException si es produeix un error 
      */   
     
+    //TODO completar aquest metode
     public List<Empleat> obtenirEmpleatsPerCiutat(String ciutat) throws UtilitatPersistenciaException{
         JdbcPreparedQueryDao jdbcDao = new JdbcPreparedQueryDao() {
             @Override
@@ -300,7 +303,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
 
             @Override
             public String getStatement() {
-                return "SELECT * FROM Empleat em, Establiment est WHERE em.ciutat LIKE ? AND em.establiment = est.codi";
+                return "SELECT e.codi, e.nom, e.ciutat, e.establiment, es.nom, es.ciutat FROM Empleat e JOIN Establiment es ON e.establiment = es.codi WHERE e.ciutat LIKE ?";
             }
 
             @Override
@@ -322,6 +325,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
      * @throws UtilitatJdbcSQLException si es produeix un error 
      */
     
+    //TODO completar aquest metode
     public List<Empleat> obtenirEmpleatsQueTreballenOnViuen() throws UtilitatJdbcSQLException {
         JdbcPreparedQueryDao jdbcDao = new JdbcPreparedQueryDao() {
             @Override
@@ -347,7 +351,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
 
             @Override
             public String getStatement() {
-                return "SELECT * FROM Empleat e, Establiment es WHERE e.ciutat = es.ciutat";
+                return "SELECT e.codi, e.nom, e.ciutat, e.establiment, es.nom, es.ciutat FROM Empleat e JOIN Establiment es ON e.establiment = es.codi WHERE e.ciutat = es.ciutat";
             }
 
             @Override
@@ -358,5 +362,4 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
         List<Empleat> empleat = UtilitatJdbcPlus.obtenirLlista(con, jdbcDao);        
         return empleat;
     }
-
 }
