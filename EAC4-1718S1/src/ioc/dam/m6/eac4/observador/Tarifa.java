@@ -17,9 +17,6 @@ import java.beans.VetoableChangeSupport;
  * @author professor
  */
 public class Tarifa {
-//TODO cal afegir les dades necessaries per admetre els observadors 
-// com es veu al codi dels metodes, s'han d'anomenar vcs i pcs 
-
 
     private String nom="";  //nom de la tarifa
     private VetoableChangeSupport vcs = new VetoableChangeSupport(this);
@@ -45,10 +42,6 @@ public class Tarifa {
         this.pcs.firePropertyChange("tarifa.nom", this.nom, nom);
         this.nom = nom;
     }
-//TODO cal afegir els metodes necessaris per registrar i cancel.lar el registre
-// dels observadors.
-// Com es veu al codi de la classe Pantalla, s'han d'anomenar
-// addPropertyChangeListener i addVetoableChangeListener
 
     public void addVetoableChangeListener(VetoableChangeListener listener) {
          this.vcs.addVetoableChangeListener(listener);

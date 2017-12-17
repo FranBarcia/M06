@@ -34,7 +34,6 @@ public class ObservadorVetant implements VetoableChangeListener{
      */
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        //  TODO cal implementar el metode
         String novaTarifa;
         
         if (canvisPermesos == 0) {

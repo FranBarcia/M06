@@ -27,7 +27,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
 
    /**
      * Constructor que rep una connexio per parametre.
-     * @param connection la connexio amb la que aquest objecte treballara†
+     * @param connection la connexio amb la que aquest objecte treballar√†
      */
     
     public EmpleatDao(Connection connection) {
@@ -161,10 +161,22 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
         return ret;
     }
 
-    //TODO completar aquest metode
     @Override
     public void eliminar(final Empleat entitat) throws UtilitatPersistenciaException {
-        
+         JdbcPreparedDao jdbcDao = new JdbcPreparedDao() {
+
+            @Override
+            public void setParameter(PreparedStatement pstm) throws SQLException {
+                int field=0;
+                pstm.setInt(++field, entitat.getCodi());
+            }
+
+            @Override
+            public String getStatement() {
+                return "delete from Empleat where codi = ?";
+            }
+        };
+        UtilitatJdbcPlus.executar(con, jdbcDao);
     }
 
     @Override
@@ -215,9 +227,42 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
      * @throws UtilitatPersistenciaException si es produeix un error 
      */  
     
-    //TODO completar aquest metode
     public List<Empleat> obtenirEmpleatsPerNom(String nom) throws UtilitatPersistenciaException{
-        return null;  //instruccio que cal canviar; nomes hi es perque es pugui compilar
+        JdbcPreparedQueryDao jdbcDao = new JdbcPreparedQueryDao() {
+            @Override
+            public Object writeObject(ResultSet rs) throws SQLException {
+                int field=0;
+                Empleat empleat = new Empleat();
+                empleat.setCodi(rs.getInt(++field));
+                empleat.setNom(rs.getString(++field));
+                empleat.setCiutat(rs.getString(++field));
+                
+                Establiment est=new Establiment();
+                est.setCodi(rs.getInt(++field));
+                if(!rs.wasNull()){
+                    est.setNom(rs.getString(++field));
+                    est.setCiutat(rs.getString(++field));
+                }else{
+                    est=null;
+                }
+                empleat.setEstabliment(est);
+                
+                return empleat;
+            }
+
+            @Override
+            public String getStatement() {
+                return "SELECT e FROM Empleat e WHERE e.nom LIKE ?";
+            }
+
+            @Override
+            public void setParameter(PreparedStatement pstm) 
+                                                    throws SQLException {
+                pstm.setString(1, nom);
+            }
+        };
+        List<Empleat> empleat = UtilitatJdbcPlus.obtenirLlista(con, jdbcDao);        
+        return empleat;
     }
 
     /**
@@ -230,10 +275,42 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
      * @throws UtilitatPersistenciaException si es produeix un error 
      */   
     
-    //TODO completar aquest metode
     public List<Empleat> obtenirEmpleatsPerCiutat(String ciutat) throws UtilitatPersistenciaException{
- 
-        return null;  //instruccio que cal canviar; nomes hi es perque es pugui compilar
+        JdbcPreparedQueryDao jdbcDao = new JdbcPreparedQueryDao() {
+            @Override
+            public Object writeObject(ResultSet rs) throws SQLException {
+                int field=0;
+                Empleat empleat = new Empleat();
+                empleat.setCodi(rs.getInt(++field));
+                empleat.setNom(rs.getString(++field));
+                empleat.setCiutat(rs.getString(++field));
+                
+                Establiment est=new Establiment();
+                est.setCodi(rs.getInt(++field));
+                if(!rs.wasNull()){
+                    est.setNom(rs.getString(++field));
+                    est.setCiutat(rs.getString(++field));
+                }else{
+                    est=null;
+                }
+                empleat.setEstabliment(est);
+                
+                return empleat;
+            }
+
+            @Override
+            public String getStatement() {
+                return "SELECT e FROM Empleat e WHERE e.ciutat LIKE ?";
+            }
+
+            @Override
+            public void setParameter(PreparedStatement pstm) 
+                                                    throws SQLException {
+                pstm.setString(1, ciutat);
+            }
+        };
+        List<Empleat> empleat = UtilitatJdbcPlus.obtenirLlista(con, jdbcDao);        
+        return empleat;
     }
     
     /**
@@ -243,11 +320,43 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
      * @return llista amb tots els empleats del sistema de persistencia 
      * la ciutat dels quals coincideix amb la de l'establilment que tenen assignat.
      * @throws UtilitatJdbcSQLException si es produeix un error 
-     */   
-    //TODO completar aquest metode
+     */
+    
     public List<Empleat> obtenirEmpleatsQueTreballenOnViuen() throws UtilitatJdbcSQLException {
-        return null;  //instruccio que cal canviar; nomes hi es perque es pugui compilar
+        JdbcPreparedQueryDao jdbcDao = new JdbcPreparedQueryDao() {
+            @Override
+            public Object writeObject(ResultSet rs) throws SQLException {
+                int field=0;
+                Empleat empleat = new Empleat();
+                empleat.setCodi(rs.getInt(++field));
+                empleat.setNom(rs.getString(++field));
+                empleat.setCiutat(rs.getString(++field));
+                
+                Establiment est=new Establiment();
+                est.setCodi(rs.getInt(++field));
+                if(!rs.wasNull()){
+                    est.setNom(rs.getString(++field));
+                    est.setCiutat(rs.getString(++field));
+                }else{
+                    est=null;
+                }
+                empleat.setEstabliment(est);
+                
+                return empleat;
+            }
 
+            @Override
+            public String getStatement() {
+                return "SELECT * FROM Empleat e, Establiment es WHERE e.ciutat = es.ciutat";
+            }
+
+            @Override
+            public void setParameter(PreparedStatement pstm) throws SQLException {
+                
+            }
+        };
+        List<Empleat> empleat = UtilitatJdbcPlus.obtenirLlista(con, jdbcDao);        
+        return empleat;
     }
 
 }

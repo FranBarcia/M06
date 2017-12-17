@@ -15,11 +15,11 @@ public interface AplicacioBD {
     /**
      * Obte una connexio a partir de les dades configurades en invocar el 
      * metode <code>iniciar</code>. Un cop obtinguda la connexio, aquesta 
-     * romandra  oberta i es podra  reciclar fins que no s'invoqui el metode 
+     * romandrÃ  oberta i es podrÃ  reciclar fins que no s'invoqui el metode 
      * <code>tancar</code>. Abans d'invocar aquest metode, cal haver invocat 
      * el metode <code>iniciar</code>. En cas que s'invoqui obrir sense cap 
-     * invocacio previa del metode <code>iniciar</code> produira  un error que es 
-     * materialitzara  en el llancament de <code>UtilitatPersistenciaException</code>.
+     * invocacio previa del metode <code>iniciar</code> produirÃ  un error que es 
+     * materialitzarÃ  en el llancament de <code>UtilitatPersistenciaException</code>.
      * El metode iniciar nomes s'ha d'invocar una unica vegada. Un cop invocat, 
      * si les dades de configuracio son correctes i el SGBD es accessible, 
      * no hauria de produir-se cap error.
@@ -30,8 +30,8 @@ public interface AplicacioBD {
     /**
      * Tanca la connexio oberta des de la invocacio del metode <i>obrir</i>. 
      * La base de dades ha d'estar aixecada i ha de mantenir oberta la connexio.
-     * En cas d'error, aquest sera  enregistrat en un fitxer, pero² no es 
-     * llancara  cap excepcio per evitar una excessiva imbrincacio de sentencies 
+     * En cas d'error, aquest seraï¿½ enregistrat en un fitxer, peroï¿½ no es 
+     * llancaraï¿½ cap excepcio per evitar una excessiva imbrincacio de sentencies 
      * try-catch.
      */    
     void tancar();
