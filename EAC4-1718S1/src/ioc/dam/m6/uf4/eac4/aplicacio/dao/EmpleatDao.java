@@ -268,7 +268,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
     /**
      * Permet obtenir una llista de tots els empleats del sistema de persistencia
      * amb d'una determinada ciutat. Inclou les dades de l'establiment que cada 
-     * empleatte assignat.
+     * empleat te assignat.
      * @param ciutat ciutat dels empleats que formaran part de la llista
      * @return llista amb tots els empleats del sistema de persistencia de la ciutat
      * indicada pel parametre.
@@ -300,7 +300,7 @@ public class EmpleatDao extends AbstractJdbcDaoSimplificat<Empleat> {
 
             @Override
             public String getStatement() {
-                return "SELECT e FROM Empleat e WHERE e.ciutat LIKE ?";
+                return "SELECT * FROM Empleat em, Establiment est WHERE em.ciutat LIKE ? AND em.establiment = est.codi";
             }
 
             @Override

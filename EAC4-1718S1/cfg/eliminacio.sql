@@ -1,2 +1,2 @@
-DROP TABLE Establiment;
 DROP TABLE Empleat;
+DROP TABLE Establiment;

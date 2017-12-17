@@ -1,8 +1,6 @@
-dic 17, 2017 2:20:50 AM ioc.dam.m6.persistencia.UtilitatJdbc onError
+dic 17, 2017 11:20:17 AM ioc.dam.m6.persistencia.UtilitatJdbc onError
 GRAVE: null
-org.postgresql.util.PSQLException: ERROR: cannot drop table establiment because other objects depend on it
-  Detail: constraint empleat_establiment_fkey on table empleat depends on table establiment
-  Hint: Use DROP ... CASCADE to drop the dependent objects too.
+org.postgresql.util.PSQLException: ERROR: relation "establiment" already exists
 	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2310)
 	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2023)
 	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:217)
@@ -11,24 +9,20 @@ org.postgresql.util.PSQLException: ERROR: cannot drop table establiment because 
 	at org.postgresql.jdbc.PgStatement.executeUpdate(PgStatement.java:294)
 	at ioc.dam.m6.persistencia.UtilitatJdbc.executar(UtilitatJdbc.java:98)
 	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.llegirFitxerSQLIExecutarLo(EstructuraAplicacioBD.java:126)
-	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.eliminarEstructura(EstructuraAplicacioBD.java:102)
-	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.executaOrdre(EstructuraAplicacioBD.java:87)
-	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.main(EstructuraAplicacioBD.java:39)
+	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.crearEstructura(EstructuraAplicacioBD.java:98)
+	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.executaOrdre(EstructuraAplicacioBD.java:85)
+	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.main(EstructuraAplicacioBD.java:36)
 
-dic 17, 2017 2:20:50 AM ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD main
+dic 17, 2017 11:20:17 AM ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD main
 GRAVE: null
-ioc.dam.m6.persistencia.excepcions.UtilitatJdbcSQLException: ERROR: cannot drop table establiment because other objects depend on it
-  Detail: constraint empleat_establiment_fkey on table empleat depends on table establiment
-  Hint: Use DROP ... CASCADE to drop the dependent objects too.
+ioc.dam.m6.persistencia.excepcions.UtilitatJdbcSQLException: ERROR: relation "establiment" already exists
 	at ioc.dam.m6.persistencia.UtilitatJdbc.onError(UtilitatJdbc.java:219)
 	at ioc.dam.m6.persistencia.UtilitatJdbc.executar(UtilitatJdbc.java:101)
 	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.llegirFitxerSQLIExecutarLo(EstructuraAplicacioBD.java:126)
-	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.eliminarEstructura(EstructuraAplicacioBD.java:102)
-	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.executaOrdre(EstructuraAplicacioBD.java:87)
-	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.main(EstructuraAplicacioBD.java:39)
-Caused by: org.postgresql.util.PSQLException: ERROR: cannot drop table establiment because other objects depend on it
-  Detail: constraint empleat_establiment_fkey on table empleat depends on table establiment
-  Hint: Use DROP ... CASCADE to drop the dependent objects too.
+	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.crearEstructura(EstructuraAplicacioBD.java:98)
+	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.executaOrdre(EstructuraAplicacioBD.java:85)
+	at ioc.dam.m6.eac4.aplicacio.controlsgbd.EstructuraAplicacioBD.main(EstructuraAplicacioBD.java:36)
+Caused by: org.postgresql.util.PSQLException: ERROR: relation "establiment" already exists
 	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2310)
 	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2023)
 	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:217)
